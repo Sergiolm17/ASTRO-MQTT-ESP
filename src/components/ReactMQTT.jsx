@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import SpeechRecognition from "./SpeechRecognition";
 import mqtt from "mqtt/dist/mqtt.min";
 
 export default function ReactCounter() {
@@ -7,10 +8,7 @@ export default function ReactCounter() {
   const [isSubed, setIsSub] = useState(false);
   const [payload, setPayload] = useState({});
 
-  const mqttConnect = (host, mqttOption) => {
-    setConnectStatus("Connecting");
-    setClient(mqtt.connect(host, mqttOption));
-  };
+  const mqttConnect = (host, mqttOption) => {};
   useEffect(() => {
     if (client) {
       console.log(client);
@@ -28,6 +26,16 @@ export default function ReactCounter() {
         const payload = { topic, message: message.toString() };
         setPayload(payload);
       });
+    } else {
+      setConnectStatus("Connecting");
+      setClient(
+        mqtt.connect("mqtts://mqtt.flespi.io", {
+          //port: 1883,
+          clientId: "mqttjs_" + Math.random().toString(16).substr(2, 8),
+          username:
+            "FlespiToken WldwjLB4BQgGBGmZYtQsz0DYh1R4Dn0ow3KFE9y3PCze7J4V3IbqyEcDtTyX4obq",
+        }),
+      );
     }
   }, [client]);
   const mqttSub = (subscription) => {
@@ -56,18 +64,8 @@ export default function ReactCounter() {
   };
   return (
     <div id="react" className="counter">
-      <button
-        onClick={() =>
-          mqttConnect("mqtt://mqtt.flespi.io", {
-            //port: 1883,
-            clientId: "mqttjs_" + Math.random().toString(16).substr(2, 8),
-            username:
-              "FlespiToken WldwjLB4BQgGBGmZYtQsz0DYh1R4Dn0ow3KFE9y3PCze7J4V3IbqyEcDtTyX4obq",
-          })
-        }
-      >
-        {connectStatus}
-      </button>
+      <SpeechRecognition></SpeechRecognition>
+      {connectStatus}
       {!isSubed ? (
         <button
           onClick={() =>

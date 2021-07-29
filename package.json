@@ -4,13 +4,15 @@
   "private": true,
   "scripts": {
     "start": "astro dev",
-    "build": "astro build"
+    "build": "astro build && workbox generateSW"
   },
   "devDependencies": {
     "@astrojs/renderer-react": "^0.2.0",
     "astro": "^0.18.1"
   },
   "dependencies": {
-    "mqtt": "4.0.1"
+    "mqtt": "4.0.1",
+    "react-speech-kit": "^3.0.1",
+    "use-http": "^1.0.22"
   }
 }
