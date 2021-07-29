@@ -10,7 +10,6 @@ export default function SpeechRecognition() {
   const [active, setActive] = useState(false);
   const { post } = useFetch(url);
   const { speak, voices } = useSpeechSynthesis();
-  console.log(voices);
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result) => {
       setValue(result);
